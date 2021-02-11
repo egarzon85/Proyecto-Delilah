@@ -1,0 +1,69 @@
+
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+    "username": "Eche77",
+    "password": "byron"
+}
+
+########USERS########
+
+GET http://localhost:3000/users
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyOSwidXNlcm5hbWUiOiJFY2hlNzciLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjEzMDcyMzA1fQ.Ysq9w7QsR-qZiS-tTRsM1CFbsL1opNQAv59-nlzLIGQ
+###
+
+
+GET http://localhost:3000/users/30
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyOSwidXNlcm5hbWUiOiJFY2hlNzciLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjEzMDcyMzA1fQ.Ysq9w7QsR-qZiS-tTRsM1CFbsL1opNQAv59-nlzLIGQ
+
+###
+
+POST  http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "username": "Eche77",
+    "name": "Exequiel",
+    "surname": "Garzon",
+    "email": "eche85@gmail.com",
+    "phone_number": 1160001234,
+    "address": "Fake Street 123",
+    "password": "byron",
+    "is_admin": true
+}
+
+########PRODUCTS########
+
+POST  http://localhost:3000/products
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyOSwidXNlcm5hbWUiOiJFY2hlNzciLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjEzMDcyMzA1fQ.Ysq9w7QsR-qZiS-tTRsM1CFbsL1opNQAv59-nlzLIGQ
+
+
+{
+    "name": "Pizza Pepperoni",
+    "price": 600,
+    "img_url": "https://mahatmarice.com/wp-content/uploads/2020/04/Rice-Pizza-Crust.jpg"
+}
+
+###
+
+GET http://localhost:3000/products
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyOSwidXNlcm5hbWUiOiJFY2hlNzciLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjEzMDcxNzEyfQ.EV6beGDrucKbZ_Gy0kpJlYKLX1a0mTe43bgiRWAAk18
+###
+
+GET http://localhost:3000/products/1
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyOSwidXNlcm5hbWUiOiJFY2hlNzciLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjEzMDcyMzA1fQ.Ysq9w7QsR-qZiS-tTRsM1CFbsL1opNQAv59-nlzLIGQ
+
+
+###
+
+DELETE http://localhost:3000/products/1
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyOSwidXNlcm5hbWUiOiJFY2hlNzciLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjEzMDcyMzA1fQ.Ysq9w7QsR-qZiS-tTRsM1CFbsL1opNQAv59-nlzLIGQ
+
+
+
+
+
+
+
