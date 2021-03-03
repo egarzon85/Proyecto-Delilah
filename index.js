@@ -15,6 +15,8 @@ server.disable('x-powered-by');
 //IMPORT MODELS
 const users = require('./users');
 const products = require('./products');
+const orders = require('./orders');
+const productOrder = require('./product_order');
 
 
 //SIGNATURE JWT
@@ -32,13 +34,14 @@ server.use(bodyParser.json());
 // CREAR UN NUEVO USUARIO
 
 server.post("/users", validateUsername, validateEmail, function (req, res) {
-    bcryptjs.genSalt(10, function(err,salt){
-        bcryptjs.hash(req.body.password, salt, function(err,hash){
+    bcryptjs.genSalt(10, function (err, salt) {
+        bcryptjs.hash(req.body.password, salt, function (err, hash) {
             users.create({
                 username: req.body.username,
                 name: req.body.name,
                 surname: req.body.surname,
                 email: req.body.email,
+                address: req.body.address,
                 phone_number: req.body.phone_number,
                 password: hash,
                 is_admin: req.body.is_admin
@@ -48,10 +51,10 @@ server.post("/users", validateUsername, validateEmail, function (req, res) {
                     "msg": "User created successfully"
                 })
             });
-        }) 
-        });
+        })
     });
-    
+});
+
 
 // LISTAR TODAS LOS USUARIOS
 
@@ -87,7 +90,7 @@ server.get("/users/:id_user", auth, function (req, res) {
 
 //CREAR UN NUEVO PRODUCTO
 
-server.post("/products", auth, validateProduct,function (req, res) {
+server.post("/products", auth, validateProduct, function (req, res) {
     products.create({
         name: req.body.name,
         price: req.body.price,
@@ -98,7 +101,7 @@ server.post("/products", auth, validateProduct,function (req, res) {
             "msg": "Product created successfully"
         })
     });
-}) 
+})
 
 // LISTAR TODAS LOS PRODUCTOS
 
@@ -146,37 +149,100 @@ server.delete("/products/:id_product", auth, function (req, res) {
             res.status(404).json("No product found")
         } else {
             res.status(201).json({
-                //"id": borrado.id_product,
+                "id": id_product,
                 "msg": "Product deleted successfully"
             })
         }
     });
 });
 
+// MODIFICAR UN PRODUCTO
+server.patch("/products/:id_product", auth, function (req, res) {
+    let {
+        id_product
+    } = req.params;
+    products.update({
+        name: req.body.name,
+        price: req.body.price,
+        img_url: req.body.img_url
+    }, {
+        where: {
+            id_product: id_product
+        }
+    }).then(function (products) {
+        if (products[0]) {
+            res.status(201).json({
+                "id": id_product,
+                "msg": "Product updated successfully"
+            })
+        } else {
+            res.status(404).json("No product found")
+        }
+    });
+});
+
+
+//////////////////////////ORDERS///////////////////////////
+
+// CREAR UNA NUEVA ORDEN
+
+server.post("/orders", auth, async function (req, res) {
+    const findProducts = await products.findAll(
+        {
+            raw: true
+        }
+    );
+    var totalOrder = 0 
+    req.body.products.forEach(element => {
+        let productInfo = findProducts.find( product => product.id_product == element.id_product);
+        totalOrder += (productInfo.price * element.quantity)
+    });
+    orders.create({
+        id_user: req.userData.id_user,
+        id_pay_method: req.body.id_pay_method,
+        total: totalOrder
+    }).then(async function (result) {
+        await req.body.products.forEach(element=> { 
+            productOrder.create({
+                id_order: result.id_order,
+                id_product: element.id_product,
+                quantity: element.quantity
+            })
+        })
+        res.status(201).json({
+            "id": result.id_order,
+            "msg": "Order created successfully"
+        })
+    });
+})
 
 //////////////////////////LOGIN///////////////////////////
 
 server.post("/users/login", function (req, res) {
-    users.findOne({where:{username: req.body.username}}).then(user => {
-        if(user === null){
+    users.findOne({
+        where: {
+            username: req.body.username
+        }
+    }).then(user => {
+        if (user === null) {
             res.status(401).json({
                 message: "Invalid credentials!",
             });
-        }else{
-            bcryptjs.compare(req.body.password, user.password, function(err, result){
-                if(result){
+        } else {
+            bcryptjs.compare(req.body.password, user.password, function (err, result) {
+                if (result) {
                     const token = jwt.sign({
                         id_user: user.id_user,
                         username: user.username,
                         is_admin: user.is_admin
-                    }, signature, function(err, token){
+                    }, signature, function (err, token) {
                         res.status(200).json({
                             message: "Authentication successful!",
                             token: token
                         });
                         //req.userData = userData
                     });
-                }else{
+                } else {
                     res.status(401).json({
                         message: "Invalid credentials!",
                     });
@@ -235,15 +301,15 @@ function validateProduct(req, res, next) {
 }
 
 function auth(req, res, next) {
-try {
-    const token = req.headers.authorization.split(" ")[1];
-    const validData = jwt.verify(token, signature);
-    console.log(validData);
-    if (validData) {
-    req.userData = validData.userData;
-    next();
+    try {
+        const token = req.headers.authorization.split(" ")[1];
+        const validData = jwt.verify(token, signature);
+        console.log(validData);
+        if (validData) {
+            req.userData = validData;
+            next();
+        }
+    } catch (err) {
+        res.status(401).json("You must provide a valid token");
     }
-} catch (err) {
-    res.status(401).json("You must provide a valid token");
-}
 }

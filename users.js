@@ -11,6 +11,7 @@ const users = conn.define("users",{
     name: Sequelize.DataTypes.TEXT,
     surname: Sequelize.DataTypes.TEXT,
     email: Sequelize.DataTypes.TEXT,
+    address: Sequelize.DataTypes.TEXT,
     phone_number: Sequelize.DataTypes.INTEGER,
     password: Sequelize.DataTypes.TEXT,
     is_admin: Sequelize.DataTypes.BOOLEAN
