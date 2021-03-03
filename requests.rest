@@ -10,62 +10,60 @@ Content-Type: application/json
 ########USERS########
 
 GET http://localhost:3000/users
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyOSwidXNlcm5hbWUiOiJFY2hlNzciLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjEzMDcyMzA1fQ.Ysq9w7QsR-qZiS-tTRsM1CFbsL1opNQAv59-nlzLIGQ
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
+
 ###
 
-GET http://localhost:3000/users/30
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyOSwidXNlcm5hbWUiOiJFY2hlNzciLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjEzMDcyMzA1fQ.Ysq9w7QsR-qZiS-tTRsM1CFbsL1opNQAv59-nlzLIGQ
-
+GET http://localhost:3000/users/34
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
 ###
 
 POST  http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "username": "Eche85",
+    "username": "EcheAdmin",
     "name": "Exequiel",
     "surname": "Garzon",
-    "email": "eche77@gmail.com",
+    "email": "echeAdmin@gmail.com",
     "address": "Direccion inventada 123",
     "phone_number": 1160001234,
     "address": "Fake Street 123",
     "password": "byron",
-    "is_admin": false
+    "is_admin": true
 }
 
 ########PRODUCTS########
 
 POST  http://localhost:3000/products
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyOSwidXNlcm5hbWUiOiJFY2hlNzciLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjEzMDcyMzA1fQ.Ysq9w7QsR-qZiS-tTRsM1CFbsL1opNQAv59-nlzLIGQ
-
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
 
 {
-    "name": "Pizza Muzzarella",
-    "price": 600,
+    "name": "Ensalada",
+    "price": 400,
     "img_url": "https://mahatmarice.com/wp-content/uploads/2020/04/Rice-Pizza-Crust.jpg"
 }
 
 ###
 
 GET http://localhost:3000/products
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyOSwidXNlcm5hbWUiOiJFY2hlNzciLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjEzMDcxNzEyfQ.EV6beGDrucKbZ_Gy0kpJlYKLX1a0mTe43bgiRWAAk18
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
 ###
 
 GET http://localhost:3000/products/7
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyOSwidXNlcm5hbWUiOiJFY2hlNzciLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjEzMDcyMzA1fQ.Ysq9w7QsR-qZiS-tTRsM1CFbsL1opNQAv59-nlzLIGQ
-
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
 
 ###DELETE
 
 DELETE http://localhost:3000/products/8
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyOSwidXNlcm5hbWUiOiJFY2hlNzciLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjEzMDcyMzA1fQ.Ysq9w7QsR-qZiS-tTRsM1CFbsL1opNQAv59-nlzLIGQ
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
 
 ###UPDATE
 
 PATCH http://localhost:3000/products/7
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyOSwidXNlcm5hbWUiOiJFY2hlNzciLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjEzMDcyMzA1fQ.Ysq9w7QsR-qZiS-tTRsM1CFbsL1opNQAv59-nlzLIGQ
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
 
 {
     "name": "Pizza Pepperoni",
@@ -76,16 +74,52 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyOSwid
 
 ########ORDERS########
 
+//CREAR ORDENES
+
 POST  http://localhost:3000/orders
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozMiwidXNlcm5hbWUiOiJFY2hlNzciLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjE0NzI4ODU5fQ.sWBaz0KPjpBbNBqlSLD-cbPAzz0abitTQg9uDY4YFmE
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
 
 {
-        "id_pay_method": 1,
-        "products":[{
-            "id_product": 7,
-            "quantity": 2
-        }] 
+        "id_pay_method": 2,
+        "products":[
+            {
+            "id_product": 9,
+            "quantity": 3
+        }
+        ] 
 
 }
+
+###
+
+//LISTAR ORDENES
+GET  http://localhost:3000/orders
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
+
+###
+
+//LISTAR PRODUCTOS DE UNA ORDEN
+GET  http://localhost:3000/orders/24/products
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
+###
+
+
+//UPDATE STATUS
+
+PATCH  http://localhost:3000/orders/24
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
+
+{
+        "id_status": 1
+
+}
+
+###
+
+//DELETE ORDER
+
+DELETE  http://localhost:3000/orders/22
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
 

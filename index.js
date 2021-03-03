@@ -17,6 +17,7 @@ const users = require('./users');
 const products = require('./products');
 const orders = require('./orders');
 const productOrder = require('./product_order');
+const sequelize = require("./conexion");
 
 
 //SIGNATURE JWT
@@ -149,7 +150,7 @@ server.delete("/products/:id_product", auth, function (req, res) {
             res.status(404).json("No product found")
         } else {
             res.status(201).json({
-                "id": id_product,
+                "id": borrado.id_product,
                 "msg": "Product deleted successfully"
             })
         }
@@ -187,14 +188,12 @@ server.patch("/products/:id_product", auth, function (req, res) {
 // CREAR UNA NUEVA ORDEN
 
 server.post("/orders", auth, async function (req, res) {
-    const findProducts = await products.findAll(
-        {
-            raw: true
-        }
-    );
-    var totalOrder = 0 
+    const findProducts = await products.findAll({
+        raw: true
+    });
+    var totalOrder = 0
     req.body.products.forEach(element => {
-        let productInfo = findProducts.find( product => product.id_product == element.id_product);
+        let productInfo = findProducts.find(product => product.id_product == element.id_product);
         totalOrder += (productInfo.price * element.quantity)
     });
     orders.create({
@@ -202,7 +201,7 @@ server.post("/orders", auth, async function (req, res) {
         id_pay_method: req.body.id_pay_method,
         total: totalOrder
     }).then(async function (result) {
-        await req.body.products.forEach(element=> { 
+        await req.body.products.forEach(element => {
             productOrder.create({
                 id_order: result.id_order,
                 id_product: element.id_product,
@@ -215,6 +214,99 @@ server.post("/orders", auth, async function (req, res) {
         })
     });
 })
+
+// LISTAR ORDENES
+
+server.get("/orders", auth, function (req, res) {
+    sequelize
+        .query(
+            "select o.id_order, u.username username, u.address address, so.status_name, pm.pay_method_name, o.total from users u inner join orders o on o.id_user = u.id_user INNER JOIN status_order so on so.id_status = o.id_status INNER JOIN payment_method pm on pm.id_pay_method = o.id_pay_method", {
+                type: sequelize.QueryTypes.SELECT
+            }
+        )
+        .then(results => {
+            if (results.length !== 0) {
+                req.orderData = results;
+                const {orderData} = req;
+                res.status(201).json({"Orders": orderData});
+            } else {
+                res.status(404).json("There is no order to get");
+            }
+        });
+})
+
+//LISTAR LOS PRODUCTOS DE UNA ORDEN
+
+server.get("/orders/:id_order/products", auth, function (req, res) {
+    let {
+        id_order
+    } = req.params;
+    sequelize
+        .query(
+            `select o.id_order, p.id_product, p.name, p.price, p.img_url, po.quantity from users u inner join orders o on o.id_user = u.id_user INNER JOIN product_orders po on o.id_order = po.id_order INNER JOIN products p on p.id_product = po.id_product where o.id_order =${id_order}`, {
+                type: sequelize.QueryTypes.SELECT
+            }
+        )
+        .then(results => {
+            if (results.length !== 0) {
+                req.orderData = results;
+                const {orderData} = req;
+                res.status(201).json({"Products Order": orderData });
+            } else {
+                res.status(404).json("There is no order to get");
+            }
+        });
+})
+
+
+
+// ELIMINAR UNA ORDEN
+
+server.delete("/orders/:id_order", auth, function (req, res) {
+    let {
+        id_order
+    } = req.params;
+    orders.destroy({
+        where: {
+            id_order: id_order
+        }
+    }).then(function (borrado) {
+        if (borrado === 0) {
+            res.status(404).json("No order found")
+        } else {
+            res.status(201).json({
+                "id": borrado.id_product,
+                "msg": "Order deleted successfully"
+            })
+        }
+    });
+});
+
+
+
+// CAMBIAR ESTADO ORDEN
+
+server.patch("/orders/:id_order", auth, function (req, res) {
+    let {
+        id_order
+    } = req.params;
+    orders.update({
+        id_status: req.body.id_status
+    }, {
+        where: {
+            id_order: id_order
+        }
+    }).then(function (order) {
+        if (order[0]) {
+            res.status(201).json({
+                "id": id_order,
+                "msg": "Order status updated successfully"
+            })
+        } else {
+            res.status(404).json("No order found")
+        }
+    });
+});
 
 //////////////////////////LOGIN///////////////////////////
 
@@ -311,5 +403,14 @@ function auth(req, res, next) {
         }
     } catch (err) {
         res.status(401).json("You must provide a valid token");
+    }
+}
+
+function admin(req, res, next) {
+    let isAdmin = req.userData.is_admin
+    if (isAdmin === true) {
+        next()
+    } else {
+        res.status(401).json("You must be an admin");
     }
 }
