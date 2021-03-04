@@ -60,11 +60,24 @@ server.post("/users", validateUsername, validateEmail, function (req, res) {
 // LISTAR TODAS LOS USUARIOS
 
 server.get("/users", auth, function (req, res) {
-    users.findAll({
-        raw: true,
-    }).then(function (users) {
-        res.status(200).json(users);
-    });
+    let isAdmin = req.userData.is_admin
+    let username = req.userData.username
+    if (isAdmin === true) {
+        users.findAll({
+            raw: true,
+        }).then(function (users) {
+            res.status(200).json(users);
+        });
+    } else {
+        users.findAll({
+            raw: true,
+            where: {
+                username: username
+            }
+        }).then(function (users) {
+            res.status(200).json(users);
+        });
+    }
 })
 
 
@@ -74,6 +87,9 @@ server.get("/users/:id_user", auth, function (req, res) {
     let {
         id_user
     } = req.params;
+    let isAdmin = req.userData.is_admin
+    let username = req.userData.username
+    if (isAdmin === true) {
     users.findAll({
         where: {
             id_user: id_user
@@ -84,14 +100,27 @@ server.get("/users/:id_user", auth, function (req, res) {
         } else {
             res.status(404).json("No user found")
         }
-    });
+    });} else {
+        users.findAll({
+            where: {
+                id_user: id_user,
+                username: username
+            }
+        }).then(function (users) {
+            if (users[0]) {
+                res.status(200).json(users[0]);
+            } else {
+                res.status(404).json("Access not allowed")
+            }
+        });
+    }
 });
 
 //////////////////////////PRODUCTS///////////////////////////
 
 //CREAR UN NUEVO PRODUCTO
 
-server.post("/products", auth, validateProduct, function (req, res) {
+server.post("/products", auth, admin, validateProduct, function (req, res) {
     products.create({
         name: req.body.name,
         price: req.body.price,
@@ -137,7 +166,7 @@ server.get("/products/:id_product", auth, function (req, res) {
 
 //ELIMINAR UN PRODUCTO
 
-server.delete("/products/:id_product", auth, function (req, res) {
+server.delete("/products/:id_product", auth, admin, function (req, res) {
     let {
         id_product
     } = req.params;
@@ -158,7 +187,7 @@ server.delete("/products/:id_product", auth, function (req, res) {
 });
 
 // MODIFICAR UN PRODUCTO
-server.patch("/products/:id_product", auth, function (req, res) {
+server.patch("/products/:id_product", auth, admin, function (req, res) {
     let {
         id_product
     } = req.params;
@@ -218,21 +247,48 @@ server.post("/orders", auth, async function (req, res) {
 // LISTAR ORDENES
 
 server.get("/orders", auth, function (req, res) {
+    let idUser = req.userData.id_user
+    let isAdmin = req.userData.is_admin
+    if (isAdmin === true) {
     sequelize
         .query(
-            "select o.id_order, u.username username, u.address address, so.status_name, pm.pay_method_name, o.total from users u inner join orders o on o.id_user = u.id_user INNER JOIN status_order so on so.id_status = o.id_status INNER JOIN payment_method pm on pm.id_pay_method = o.id_pay_method", {
+            `select o.id_order, u.username username, u.address address, so.status_name, pm.pay_method_name, o.total, o.createdAt from users u inner join orders o on o.id_user = u.id_user INNER JOIN status_order so on so.id_status = o.id_status INNER JOIN payment_method pm on pm.id_pay_method = o.id_pay_method order by o.id_order`, {
                 type: sequelize.QueryTypes.SELECT
             }
         )
         .then(results => {
             if (results.length !== 0) {
                 req.orderData = results;
-                const {orderData} = req;
-                res.status(201).json({"Orders": orderData});
+                const {
+                    orderData
+                } = req;
+                res.status(201).json({
+                    "Orders": orderData
+                });
+            } else {
+                res.status(404).json("There is no order to get");
+            }
+        });} else {
+            sequelize
+        .query(
+            `select o.id_order, u.username username, u.address address, so.status_name, pm.pay_method_name, o.total, o.createdAt from users u inner join orders o on o.id_user = u.id_user INNER JOIN status_order so on so.id_status = o.id_status INNER JOIN payment_method pm on pm.id_pay_method = o.id_pay_method where o.id_user = ${idUser} order by o.id_order`, {
+                type: sequelize.QueryTypes.SELECT
+            }
+        )
+        .then(results => {
+            if (results.length !== 0) {
+                req.orderData = results;
+                const {
+                    orderData
+                } = req;
+                res.status(201).json({
+                    "Orders": orderData
+                });
             } else {
                 res.status(404).json("There is no order to get");
             }
         });
+        }
 })
 
 //LISTAR LOS PRODUCTOS DE UNA ORDEN
@@ -241,6 +297,9 @@ server.get("/orders/:id_order/products", auth, function (req, res) {
     let {
         id_order
     } = req.params;
+    let idUser = req.userData.id_user
+    let isAdmin = req.userData.is_admin
+    if (isAdmin === true){
     sequelize
         .query(
             `select o.id_order, p.id_product, p.name, p.price, p.img_url, po.quantity from users u inner join orders o on o.id_user = u.id_user INNER JOIN product_orders po on o.id_order = po.id_order INNER JOIN products p on p.id_product = po.id_product where o.id_order =${id_order}`, {
@@ -250,19 +309,43 @@ server.get("/orders/:id_order/products", auth, function (req, res) {
         .then(results => {
             if (results.length !== 0) {
                 req.orderData = results;
-                const {orderData} = req;
-                res.status(201).json({"Products Order": orderData });
+                const {
+                    orderData
+                } = req;
+                res.status(201).json({
+                    "Products Order": orderData
+                });
             } else {
                 res.status(404).json("There is no order to get");
             }
-        });
+        });} else {
+            sequelize
+            .query(
+                `select o.id_order, p.id_product, p.name, p.price, p.img_url, po.quantity from users u inner join orders o on o.id_user = u.id_user INNER JOIN product_orders po on o.id_order = po.id_order INNER JOIN products p on p.id_product = po.id_product where o.id_order =${id_order} and u.id_user=${idUser}`, {
+                    type: sequelize.QueryTypes.SELECT
+                }
+            )
+            .then(results => {
+                if (results.length !== 0) {
+                    req.orderData = results;
+                    const {
+                        orderData
+                    } = req;
+                    res.status(201).json({
+                        "Products Order": orderData
+                    });
+                } else {
+                    res.status(404).json("There is no order to get");
+                }
+            });
+        }
 })
 
 
 
 // ELIMINAR UNA ORDEN
 
-server.delete("/orders/:id_order", auth, function (req, res) {
+server.delete("/orders/:id_order", auth, admin, function (req, res) {
     let {
         id_order
     } = req.params;
@@ -275,7 +358,7 @@ server.delete("/orders/:id_order", auth, function (req, res) {
             res.status(404).json("No order found")
         } else {
             res.status(201).json({
-                "id": borrado.id_product,
+                "id": id_order,
                 "msg": "Order deleted successfully"
             })
         }
@@ -286,7 +369,7 @@ server.delete("/orders/:id_order", auth, function (req, res) {
 
 // CAMBIAR ESTADO ORDEN
 
-server.patch("/orders/:id_order", auth, function (req, res) {
+server.patch("/orders/:id_order", auth, admin, function (req, res) {
     let {
         id_order
     } = req.params;

@@ -3,7 +3,7 @@ POST http://localhost:3000/users/login
 Content-Type: application/json
 
 {
-    "username": "Eche77",
+    "username": "EcheAdmin",
     "password": "byron"
 }
 
@@ -22,15 +22,15 @@ POST  http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "username": "EcheAdmin",
-    "name": "Exequiel",
-    "surname": "Garzon",
-    "email": "echeAdmin@gmail.com",
+    "username": "Marce",
+    "name": "Marcela",
+    "surname": "Lopez",
+    "email": "marce@gmail.com",
     "address": "Direccion inventada 123",
     "phone_number": 1160001234,
-    "address": "Fake Street 123",
+    "address": "Calle 123",
     "password": "byron",
-    "is_admin": true
+    "is_admin": false
 }
 
 ########PRODUCTS########
@@ -84,6 +84,10 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwid
         "id_pay_method": 2,
         "products":[
             {
+            "id_product": 10,
+            "quantity": 3
+        },
+                    {
             "id_product": 9,
             "quantity": 3
         }
@@ -100,19 +104,19 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwid
 ###
 
 //LISTAR PRODUCTOS DE UNA ORDEN
-GET  http://localhost:3000/orders/24/products
+GET  http://localhost:3000/orders/31/products
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
 ###
 
 
 //UPDATE STATUS
 
-PATCH  http://localhost:3000/orders/24
+PATCH  http://localhost:3000/orders/25
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNSwidXNlcm5hbWUiOiJFY2hlQWRtaW4iLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjE0ODA0NjY3fQ.hN5EFiV2Cr21g12porst-65hwam7pJntzz4tVla-cPw
 
 {
-        "id_status": 1
+        "id_status": 2
 
 }
 
@@ -120,6 +124,6 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwid
 
 //DELETE ORDER
 
-DELETE  http://localhost:3000/orders/22
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
+DELETE  http://localhost:3000/orders/27
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNSwidXNlcm5hbWUiOiJFY2hlQWRtaW4iLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjE0ODA0NjY3fQ.hN5EFiV2Cr21g12porst-65hwam7pJntzz4tVla-cPw
 
