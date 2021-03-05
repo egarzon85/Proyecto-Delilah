@@ -1,0 +1,734 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Delilah_Resto
+  description: Delilah Resto Project 3
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/egarzon/Delilah_Resto/1.0.0
+paths:
+###################################### USERS ######################################
+  /users: 
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/jason:
+            schema:
+              $ref: '#/components/schemas/UsersCreate'
+      responses:
+        '201':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/UserCreated'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    get:
+      tags: 
+          - Users
+      summary: List Users
+      responses:
+        '200':
+          description: Users List
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UsersList'
+        '404':
+          description: No users found
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization'
+          description: 'JWT Token'
+          required: true
+          
+  /users/{id_user}:
+    get:
+      tags:
+        - Users
+      summary: List a single user
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization'
+          description: 'JWT Token'
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: 'id_user'
+          required: true 
+      responses:
+        '200':
+          description: User Info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        '404':
+          description: No user found
+  
+  /users/login:  
+    post:
+        tags:
+          - Users Login
+        summary: Login users
+        requestBody:
+          required: true
+          content:
+            application/jason:
+              schema:
+                $ref: '#/components/schemas/UserLogin'
+        responses:
+          '200': 
+            description: OK
+            content:
+              application/jason:
+                schema:
+                  type: object
+                  properties:
+                    token:
+                      $ref: '#/components/schemas/Token'
+          '400':
+            description: Bad Request 
+          '500':
+            description: Internal Server Error
+            
+###################################### PRODUCTS ######################################
+  /products:
+    post:
+      tags:
+        - Products
+      summary: Create a new product
+      requestBody:
+        required: true
+        content:
+          application/jason:
+            schema:
+              $ref: '#/components/schemas/ProductCreate'
+      responses:
+        '201':
+          description: Product Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/ProductCreated'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error 
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization'
+          description: 'JWT Token'
+          required: true
+    get:
+      tags: 
+          - Products
+      summary: List Products
+      responses:
+        '200':
+          description: Users List
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductsList'
+        '404':
+          description: No products found
+          
+  /products/{id_product}:
+    get:
+      tags:
+        - Products
+      summary: List a single product
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: 'id_product'
+          required: true 
+      responses:
+        '200':
+          description: Product Info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductInfo'
+        '404':
+          description: No user found  
+          
+    patch:
+      tags: 
+          - Products
+      summary: Update Product 
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductUpdate'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductUpdated'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization'
+          description: 'JWT Token'
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: id_product
+          example: '123'
+          required: true
+    
+    
+    delete:
+      tags:
+        - Products
+      summary: Delete an existing product
+      responses:
+        '200':
+          description: Product deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/ProductDeleted'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization'
+          description: 'JWT Token'
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: 'id_product'
+          required: true 
+          
+###################################### ORDERS ######################################
+  /orders:
+    post:
+      tags:
+        - Orders
+      summary: Create a new order
+      requestBody:
+        required: true
+        content:
+          application/jason:
+            schema:
+              $ref: '#/components/schemas/OrderCreate'
+      responses:
+        '201':
+          description: Order Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/OrderCreated'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error 
+          
+  /orders/{id_order}:
+    get:
+      tags:
+        - Orders
+      summary: List a single order
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization'
+          description: 'JWT Token'
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: 'id_order'
+          required: true 
+      responses:
+        '200':
+          description: Order Info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderInfo'
+        '404':
+          description: No user found
+    
+    patch:
+      tags: 
+          - Orders
+      summary: Update Order 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderUpdate'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderUpdated'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization'
+          description: 'JWT Token'
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: id_order
+          example: '123'
+          required: true
+    
+    delete:
+      tags:
+        - Orders
+      summary: Delete an existing order
+      responses:
+        '200':
+          description: order deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/OrderDeleted'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization'
+          description: 'JWT Token'
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: 'id_order'
+          required: true 
+  
+  /orders/{id_order}/products:
+    get:
+      tags:
+        - Orders
+      summary: List products in an order
+      responses:
+        "200":
+          description: Products in an order found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsOrder'
+
+        "400":
+          description: Bad request
+        "500":
+          description: Internal server error
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization'
+          description: 'JWT Token'
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: 'id_order'
+          required: true 
+
+###################################### COMPONENTS ####################################
+components:
+  schemas:
+    Token:
+      title: Token
+      type: string
+    UsersCreate:
+      type: object
+      title: UsersCreate
+      properties:
+        username:
+          type: string
+          example: "John123"
+        name:
+          type: string
+          example: "John"
+        lastName:
+          type: string
+          example: "Doe"
+        email:
+          type: string
+          example: "johndoe@gmail.com"
+        phoneNumber:
+          type: integer
+          example: 1160001234
+        address:
+          type: string
+          example: "Fake Street 123"
+        password: 
+          type: string
+          example: "wRuxTum0c6wUStLR3p"
+        is_admin:
+          type: boolean
+          example: true
+    UserCreated:
+      title: UserCreated
+      type: object
+      properties:
+        id: 
+          type: string
+          example: "112233"
+        msg:
+          type: string
+          example: "User created successfully"
+    UsersList:
+      title: UsersList
+      type: object
+      properties:
+        id_user:
+          type: integer
+          example: 12
+        username:
+          type: string
+          example: "John123"
+        name:
+          type: string
+          example: "John"
+        lastName:
+          type: string
+          example: "Doe"
+        email:
+          type: string
+          example: "johndoe@gmail.com"
+        phoneNumber:
+          type: integer
+          example: 1160001234
+        address:
+          type: string
+          example: "Fake Street 123"
+        password: 
+          type: string
+          example: "wRuxTum0c6wUStLR3p"
+        is_admin:
+          type: boolean
+          example: true
+    UserInfo:
+      title: UserInfo
+      type: object
+      properties:
+        id_user:
+          type: integer
+          example: 12
+        username:
+          type: string
+          example: 'John123'
+        name:
+          type: string
+          example: 'John'
+        lastName:
+          type: string
+          example: 'Doe'
+        email:
+          type: string
+          example: 'johndoe@gmail.com'
+        phoneNumber:
+          type: integer
+          example: 1160001234
+        address:
+          type: string
+          example: 'Fake Street 123'
+        password: 
+          type: string
+          example: 'wRuxTumcwUStLRp'
+        is_admin:
+          type: boolean
+          example: true
+    UserLogin:
+      title: UserLogin
+      type: object
+      properties:
+        username:
+          type: string
+          example: 'John123'
+        password:
+          type: string
+          example: 'wRuxTumcwUStLRp'
+    ProductCreate:
+      type: object
+      title: ProductCreate
+      properties:
+        name:
+          type: string
+          example: 'Pizza Muzzarella'
+        price:
+          type: integer
+          example: 600
+        image_url:
+          type: string
+          example: 'https://mahatmarice.com/wp-content/uploads/2020/04/Rice-Pizza-Crust.jpg'
+    ProductCreated:
+      title: ProductCreated
+      type: object
+      properties:
+        id: 
+          type: string
+          example: '112233'
+        msg:
+          type: string
+          example: 'Product created successfully'
+    ProductsList:
+      title: ProductList
+      type: object
+      properties:
+        id_product:
+          type: integer
+          example: 15
+        name:
+          type: string
+          example: 'Pizza Muzzarella'
+        price:
+          type: integer
+          example: 600
+        image_url:
+          type: string
+          example: 'https://mahatmarice.com/wp-content/uploads/2020/04/Rice-Pizza-Crust.jpg'
+    ProductInfo:
+      title: ProductInfo
+      type: object
+      properties:
+        id_product:
+          type: integer
+          example: 15
+        name:
+          type: string
+          example: 'Pizza Muzzarella'
+        price:
+          type: integer
+          example: 600
+        image_url:
+          type: string
+          example: 'https://mahatmarice.com/wp-content/uploads/2020/04/Rice-Pizza-Crust.jpg'
+    ProductDeleted:
+      title: ProductDeleted
+      type: object
+      properties:
+        id_product: 
+          type: string
+          example: '123'
+        msg:
+          type: string
+          example: 'Product deleted successfully'
+    ProductUpdate:
+      type: object
+      title: ProductUpdate
+      properties:
+        name:
+          type: string
+          example: "Pizza Muzzarella"
+        price:
+          type: integer
+          example: 600
+        image_url:
+          type: string
+          example: 'https://mahatmarice.com/wp-content/uploads/2020/04/Rice-Pizza-Crust.jpg'
+    ProductUpdated:
+      title: ProductUpdated
+      type: object
+      properties:
+        id_product:
+          type: string
+          example: '123'
+        msg:
+          type: string
+          example: 'Product Updated successfully'
+    OrderCreate:
+      title: OrderCreate
+      type: object
+      properties:
+        paymentMethod: 
+          type: string
+          example: "Efectivo"
+        status:
+          type: string
+          example: "Confirmado"
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              id_product: 
+                type: integer
+                example: 10
+              quantity:
+                type: integer
+                example: 2
+              subtotal:
+                type: integer
+                example: 400
+        total:
+          type: integer
+          example: 400
+        id_user:
+          type: integer
+          example: 2
+    OrderCreated:
+      title: OrderCreated
+      type: object
+      properties:
+        id: 
+          type: string
+          example: '112233'
+        msg:
+          type: string
+          example: 'Order created successfully'
+    OrderInfo:
+      title: OrderInfo
+      type: object
+      properties:
+        paymentMethod: 
+          type: string
+          example: "Efectivo"
+        status:
+          type: string
+          example: "Confirmado"
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              id_product: 
+                type: integer
+                example: 10
+              quantity:
+                type: integer
+                example: 2
+              subtotal:
+                type: integer
+                example: 400
+        total:
+          type: integer
+          example: 400
+        id_user:
+          type: integer
+          example: 2
+    OrderDeleted:
+      title: OrderDeleted
+      type: object
+      properties:
+        id_product: 
+          type: string
+          example: '123'
+        msg:
+          type: string
+          example: 'Order deleted successfully'
+    OrderUpdate:
+      type: object
+      title: OrderUpdate
+      properties:
+        status:
+          type: string
+          example: "Entregado"
+    OrderUpdated:
+      title: OrderUpdated
+      type: object
+      properties:
+        id_order:
+          type: string
+          example: '123'
+        msg:
+          type: string
+          example: 'Order Updated successfully'
+    ProductsOrder:
+      title: ProductsInfo 
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              id_product:
+                type: integer
+                example: 12
+              name:
+                type: string
+                example: "Pizza Muzzarella"
+              price:
+                type: integer
+                example: 600
+              image_url:
+                type: string
+                example: 'https://mahatmarice.com/wp-content/uploads/2020/04/Rice-Pizza-Crust.jpg'
