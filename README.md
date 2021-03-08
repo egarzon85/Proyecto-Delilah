@@ -55,13 +55,19 @@ En el caso de no tenerlo instalado, descargar e instalar [NODE](https://nodejs.o
 - Abrir el panel de control MySQL. `http://localhost/phpmyadmin/`
 - Dentro del panel de control, importar el archivo `/db/delilahresto.sql`
 
-Nota: en la base de datos se encuentran pre-cargados 2 usuarios y 2 productos.
+Nota: en la base de datos se encuentran pre-cargados 2 usuarios, 3 productos, 3 medios de pago y 5 status de ordenes.
 
 - Usuario regular  
 `User: john, Password: regular`
 
 - Usuario admin  
 `User: maria, Password: admin`
+
+- Payment Methods
+`1-efectivo, 2-credito, 3-debito`
+
+- Status
+`1-nuevo , 2-confirmado, 3-preparando, 4-enviando, 5-entregado`
 
 ### 4 - Iniciando el servidor
 
