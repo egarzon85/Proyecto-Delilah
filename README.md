@@ -63,11 +63,11 @@ Nota: en la base de datos se encuentran pre-cargados 2 usuarios, 3 productos, 3 
 - Usuario admin  
 `User: maria, Password: admin`
 
-- Payment Methods
+- Payment Methods  
 `1-efectivo, 2-credito, 3-debito`
 
-- Status
-`1-nuevo , 2-confirmado, 3-preparando, 4-enviando, 5-entregado`
+- Status  
+`1-nuevo, 2-confirmado, 3-preparando, 4-enviando, 5-entregado`
 
 ### 4 - Iniciando el servidor
 
