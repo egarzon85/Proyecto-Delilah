@@ -76,7 +76,7 @@ Si todo fue realizado correctamente, debe poder visualizar la siguiente leyenda:
 
 De esta manera ya tenemos nuestro servidor en ejecución y listo para usar.
 
-### 5 - Testear endpoints
+### 5 - Test API :rocket:
 
 - Descargar e instalar la aplicación [Postman](https://www.postman.com/downloads/).
 

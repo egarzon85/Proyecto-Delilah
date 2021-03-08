@@ -282,33 +282,27 @@ paths:
           description: Bad Request
         '500':
           description: Internal Server Error 
-          
-  /orders/{id_order}:
+    
     get:
-      tags:
-        - Orders
-      summary: List a single order
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: 'Authorization'
-          description: 'JWT Token'
-          required: true
-        - schema:
-            type: string
-          in: path
-          name: 'id_order'
-          required: true 
+      tags: 
+          - Orders
+      summary: List Orders
       responses:
         '200':
-          description: Order Info
+          description: Orders List
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderInfo'
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OrdersList'
         '404':
-          description: No user found
+          description: No orders found
+          
+  /orders/{id_order}:
     
     patch:
       tags: 
@@ -426,7 +420,7 @@ components:
         name:
           type: string
           example: "John"
-        lastName:
+        surname:
           type: string
           example: "Doe"
         email:
@@ -618,12 +612,9 @@ components:
       title: OrderCreate
       type: object
       properties:
-        paymentMethod: 
-          type: string
-          example: "Efectivo"
-        status:
-          type: string
-          example: "Confirmado"
+        id_pay_method: 
+          type: integer
+          example: 1
         products:
           type: array
           items:
@@ -635,15 +626,6 @@ components:
               quantity:
                 type: integer
                 example: 2
-              subtotal:
-                type: integer
-                example: 400
-        total:
-          type: integer
-          example: 400
-        id_user:
-          type: integer
-          example: 2
     OrderCreated:
       title: OrderCreated
       type: object
@@ -654,36 +636,31 @@ components:
         msg:
           type: string
           example: 'Order created successfully'
-    OrderInfo:
-      title: OrderInfo
+    OrdersList:
+      title: OrdersList
       type: object
       properties:
-        paymentMethod: 
+        id_order:
+          type: integer
+          example: 36
+        username:
           type: string
-          example: "Efectivo"
-        status:
+          example: 'John123'
+        address:
           type: string
-          example: "Confirmado"
-        products:
-          type: array
-          items:
-            type: object
-            properties:
-              id_product: 
-                type: integer
-                example: 10
-              quantity:
-                type: integer
-                example: 2
-              subtotal:
-                type: integer
-                example: 400
+          example: 'Fake Street 123'
+        status_name:
+          type: string
+          example: 'nuevo'
+        pay_method_name:
+          type: string
+          example: 'efectivo'
         total:
           type: integer
-          example: 400
-        id_user:
-          type: integer
-          example: 2
+          example: 1200
+        createdAt:
+          type: string
+          example: '2021-03-04 18:17:15'
     OrderDeleted:
       title: OrderDeleted
       type: object
@@ -698,9 +675,9 @@ components:
       type: object
       title: OrderUpdate
       properties:
-        status:
-          type: string
-          example: "Entregado"
+        id_status:
+          type: integer
+          example: 2
     OrderUpdated:
       title: OrderUpdated
       type: object
@@ -710,7 +687,7 @@ components:
           example: '123'
         msg:
           type: string
-          example: 'Order Updated successfully'
+          example: 'Order Status Updated successfully'
     ProductsOrder:
       title: ProductsInfo 
       type: object
@@ -720,9 +697,12 @@ components:
           items:
             type: object
             properties:
+              id_order: 
+                type: integer
+                example: 1
               id_product:
                 type: integer
-                example: 12
+                example: 1
               name:
                 type: string
                 example: "Pizza Muzzarella"
@@ -732,3 +712,6 @@ components:
               image_url:
                 type: string
                 example: 'https://mahatmarice.com/wp-content/uploads/2020/04/Rice-Pizza-Crust.jpg'
+              quantity:
+                type: integer
+                example: 2
