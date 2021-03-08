@@ -179,7 +179,7 @@ server.delete("/products/:id_product", auth, admin, function (req, res) {
             res.status(404).json("No product found")
         } else {
             res.status(201).json({
-                "id": borrado.id_product,
+                "id": id_product,
                 "msg": "Product deleted successfully"
             })
         }

@@ -24,13 +24,11 @@ El proyecto consiste en la creación de un sistema de pedidos online para un res
 - :pushpin: CRUD Productos
 - :pushpin: CRUD Ordenes
 
-
 ## Documentación de la API
 
 En el siguiente link de swagger, se podrá visualizar todos los endpoints y documentación necesaria para delilah resto.
 
 [DOCUMENTACION SWAGGER](https://app.swaggerhub.com/apis-docs/egarzon/Delilah_Resto/1.0.0)
-
 
 ## Pasos de instalación e inicialización
 
@@ -59,12 +57,11 @@ En el caso de no tenerlo instalado, descargar e instalar [NODE](https://nodejs.o
 
 Nota: en la base de datos se encuentran pre-cargados 2 usuarios y 2 productos.
 
-- Usuario regular
+- Usuario regular  
 `User: john, Password: regular`
 
-- Usuario admin
+- Usuario admin  
 `User: maria, Password: admin`
-
 
 ### 4 - Iniciando el servidor
 

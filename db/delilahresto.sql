@@ -2,8 +2,8 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 03-03-2021 a las 01:57:02
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 08-03-2021 a las 15:25:30
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 8.0.1
 
@@ -38,13 +38,6 @@ CREATE TABLE `orders` (
   `createdAt` text DEFAULT NULL,
   `updatedAt` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `orders`
---
-
-INSERT INTO `orders` (`id_order`, `id_user`, `id_status`, `id_pay_method`, `total`, `createdAt`, `updatedAt`) VALUES
-(16, 32, 1, 1, '1200', '2021-03-03 00:32:18', '2021-03-03 00:32:18');
 
 -- --------------------------------------------------------
 
@@ -86,15 +79,17 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id_product`, `name`, `price`, `img_url`, `createdAt`, `updatedAt`) VALUES
-(7, 'Pizza Pepperoni', 600, 'https://mahatmarice.com/wp-content/uploads/2020/04/Rice-Pizza-Crust.jpg', '2021-02-11 19:47:09', '2021-02-16 21:51:43');
+(1, 'Pizza Muzzarella', 600, 'https://mahatmarice.com/wp-content/uploads/2020/04/Rice-Pizza-Crust.jpg', '2021-03-08 14:20:13', '2021-03-08 14:20:13'),
+(2, 'Ensalada', 400, 'https://www.superama.com.mx/views/micrositio/recetas/images/comidasaludable/ensaladamixta/Web_fotoreceta.jpg', '2021-03-08 14:20:51', '2021-03-08 14:20:51'),
+(3, 'Hamburguesa', 500, 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fcomputerhoy.com%2Fnoticias%2Flife%2Fhamburguesa-cara-mundo-cuesta-5000-dolares-776715&psig=AOvVaw2kzEY1-fQZPFy2K8TH-Act&ust=1615299674125000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJj1h6ryoO8CFQAAAAAdAAAAAB', '2021-03-08 14:21:22', '2021-03-08 14:21:22');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `product_order`
+-- Estructura de tabla para la tabla `product_orders`
 --
 
-CREATE TABLE `product_order` (
+CREATE TABLE `product_orders` (
   `id_order` int(11) NOT NULL,
   `id_product` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
@@ -150,8 +145,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `username`, `name`, `surname`, `email`, `address`, `phone_number`, `password`, `is_admin`, `createdAt`, `updatedAt`) VALUES
-(32, 'Eche77', 'Exequiel', 'Garzon', 'eche85@gmail.com', 'Fake Street 123', 1160001234, '$2a$10$XPGfRX9LdxyFoI6y0p0KgeaJXLeAo5rDo2ak3M0GCYd92uAEifjgy', 1, '2021-02-16 20:32:12', '2021-02-16 20:32:12'),
-(33, 'Eche85', 'Exequiel', 'Garzon', 'eche77@gmail.com', 'Fake Street 123', 1160001234, '$2a$10$exlD2qAVFUUUq2mKABbdueu01Nr.aFhBYNJnbY0sAOhbKdKnWM6iK', 0, '2021-02-16 20:32:36', '2021-02-16 20:32:36');
+(1, 'john', 'John', 'Doe', 'john@gmail.com', 'Street 123', 1160001234, '$2a$10$6DjnNI5KZ7DwW21u4IEWQuPA5e2EiPZyxt6E5Z.pyqoFCkwnCZegq', 0, '2021-03-08 14:18:25', '2021-03-08 14:18:25'),
+(2, 'maria', 'Maria', 'Doe', 'Maria@gmail.com', 'Calle 123', 1160001234, '$2a$10$otDGxKIvU.p5lKk6QY0SYuXZtl64a8kWDCbG3iSAi3zuBpIJcWMzC', 1, '2021-03-08 14:19:23', '2021-03-08 14:19:23');
 
 --
 -- Índices para tablas volcadas
@@ -179,9 +174,9 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id_product`);
 
 --
--- Indices de la tabla `product_order`
+-- Indices de la tabla `product_orders`
 --
-ALTER TABLE `product_order`
+ALTER TABLE `product_orders`
   ADD PRIMARY KEY (`id_product_order`),
   ADD KEY `id_product` (`id_product`) USING BTREE,
   ADD KEY `id_order` (`id_order`) USING BTREE;
@@ -206,7 +201,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `payment_method`
@@ -218,12 +213,12 @@ ALTER TABLE `payment_method`
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla `product_order`
+-- AUTO_INCREMENT de la tabla `product_orders`
 --
-ALTER TABLE `product_order`
+ALTER TABLE `product_orders`
   MODIFY `id_product_order` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -236,7 +231,7 @@ ALTER TABLE `status_order`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -246,16 +241,16 @@ ALTER TABLE `users`
 -- Filtros para la tabla `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`id_status`) REFERENCES `status_order` (`id_status`),
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`id_pay_method`) REFERENCES `payment_method` (`id_pay_method`),
-  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`id_status`) REFERENCES `status_order` (`id_status`) ON DELETE CASCADE,
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`id_pay_method`) REFERENCES `payment_method` (`id_pay_method`) ON DELETE CASCADE,
+  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE;
 
 --
--- Filtros para la tabla `product_order`
+-- Filtros para la tabla `product_orders`
 --
-ALTER TABLE `product_order`
-  ADD CONSTRAINT `product_order_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `products` (`id_product`),
-  ADD CONSTRAINT `product_order_ibfk_2` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id_order`);
+ALTER TABLE `product_orders`
+  ADD CONSTRAINT `product_orders_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `products` (`id_product`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_orders_ibfk_2` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id_order`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

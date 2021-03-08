@@ -3,8 +3,8 @@ POST http://localhost:3000/users/login
 Content-Type: application/json
 
 {
-    "username": "EcheAdmin",
-    "password": "byron"
+    "username": "maria",
+    "password": "admin"
 }
 
 ########USERS########
@@ -22,27 +22,27 @@ POST  http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "username": "Marce",
-    "name": "Marcela",
-    "surname": "Lopez",
-    "email": "marce@gmail.com",
-    "address": "Direccion inventada 123",
+    "username": "maria",
+    "name": "Maria",
+    "surname": "Doe",
+    "email": "Maria@gmail.com",
+    "address": "Calle Falsa 123",
     "phone_number": 1160001234,
     "address": "Calle 123",
-    "password": "byron",
-    "is_admin": false
+    "password": "admin",
+    "is_admin": true
 }
 
 ########PRODUCTS########
 
 POST  http://localhost:3000/products
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNSwidXNlcm5hbWUiOiJFY2hlQWRtaW4iLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjE0OTU2NDc5fQ.hN8u_UflHDWloR6WwNK2YLBA_1bz-VVovawaOI0TpnY
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJ1c2VybmFtZSI6Im1hcmlhIiwiaXNfYWRtaW4iOnRydWUsImlhdCI6MTYxNTIxMzE4Nn0.z-WkQ0ZHZScyFWhP8hl_LTqZRXH-nevKBKeeRuiTGtE
 
 {
-    "name": "Pizza Muzzarella",
-    "price": 400,
-    "img_url": "https://mahatmarice.com/wp-content/uploads/2020/04/Rice-Pizza-Crust.jpg"
+    "name": "Hamburguesa",
+    "price": 500,
+    "img_url": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fcomputerhoy.com%2Fnoticias%2Flife%2Fhamburguesa-cara-mundo-cuesta-5000-dolares-776715&psig=AOvVaw2kzEY1-fQZPFy2K8TH-Act&ust=1615299674125000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJj1h6ryoO8CFQAAAAAdAAAAABAD"
 }
 
 ###
@@ -56,7 +56,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwid
 
 ###DELETE
 
-DELETE http://localhost:3000/products/13
+DELETE http://localhost:3000/products/10
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNSwidXNlcm5hbWUiOiJFY2hlQWRtaW4iLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNjE0OTU2NDc5fQ.hN8u_UflHDWloR6WwNK2YLBA_1bz-VVovawaOI0TpnY
 
 ###UPDATE
@@ -84,11 +84,11 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwid
         "id_pay_method": 2,
         "products":[
             {
-            "id_product": 10,
+            "id_product": 16,
             "quantity": 1
         },
             {
-            "id_product": 13,
+            "id_product": 17,
             "quantity": 1
         }
         ] 
@@ -104,7 +104,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwid
 ###
 
 //LISTAR PRODUCTOS DE UNA ORDEN
-GET  http://localhost:3000/orders/31/products
+GET  http://localhost:3000/orders/39/products
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNCwidXNlcm5hbWUiOiJFY2hlIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2MTQ3NzczMTZ9.2S4IfNiOWg-qOFilRilzm1aCxjZ2z-tuPAwhejO1AwQ
 ###
 

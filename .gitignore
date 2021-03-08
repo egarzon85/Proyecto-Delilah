@@ -1,3 +1,6 @@
+# Requests
+*.rest
+
 # Logs
 logs
 *.log
